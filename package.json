@@ -10,7 +10,10 @@
   "private": true,
   "dependencies": {
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "18.2.0",
+    "react-router-dom": "^6.5.0"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "15.3.3",
