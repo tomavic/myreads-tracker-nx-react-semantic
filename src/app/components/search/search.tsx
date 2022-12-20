@@ -61,7 +61,6 @@ export default function Search({ onUpdateBook, books }: SearchProps) {
           <div className="search-books-input-wrapper">
             <input
               id={SEARCH_INPUT}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus={true}
               type="text"
               placeholder="Search by title, author, or ISBN"
