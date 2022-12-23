@@ -5,9 +5,14 @@ import {
   BookDraggedItem,
   shelves,
 } from 'src/app/models/book';
-import { DEFAULT_BOOK_COVER, DND } from 'src/app/models/conf';
+import { DEFAULT_BOOK_COVER, DND, PATHS } from 'src/app/models/conf';
 import { useDrag } from 'react-dnd';
 import { useBooksContext } from 'src/app/context/booksContext';
+import Card from 'react-bootstrap/Card';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsis, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 type BookProps = {
   book: BookData;
@@ -23,6 +28,12 @@ export default function Book({ book }: BookProps) {
   const [shelf, setShelf] = useState(book.shelf);
   const handleChangeShelf = (b: BookData | BookDraggedItem, shelf: string) => {
     const updatedBook: BookData | BookDraggedItem = { ...b, shelf };
+    setShelf(shelf);
+    booksContext.updateBook(updatedBook);
+  };
+
+  const updateOnSelect = (shelf: any) => {
+    const updatedBook: BookData | BookDraggedItem = { ...book, shelf };
     setShelf(shelf);
     booksContext.updateBook(updatedBook);
   };
@@ -45,44 +56,47 @@ export default function Book({ book }: BookProps) {
   }));
   const opacity = isDragging ? 0.4 : 1;
   return (
-    <div ref={drag} className="book" style={{ opacity }}>
-      <div className="book-top">
-        <div
-          className="book-cover"
-          style={{
-            width: 128,
-            height: 193,
-            backgroundImage: `url("${bookCover}")`,
-          }}
-        ></div>
-        <div className="book-shelf-changer">
-          <select
-            onBlur={(e) => handleChangeShelf(book, e.target.value)}
-            defaultValue={shelf}
-          >
-            <option value="move" disabled>
-              Move to...
-            </option>
+    <Card ref={drag} className="book" style={{ opacity }}>
+      <div className="card-more">
+        <Dropdown onSelect={updateOnSelect}>
+          <Dropdown.Toggle className="w-100" variant="dark" id="dropdown-basic">
+            <FontAwesomeIcon className="text-light" icon={faEllipsis} />
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
             {Object.keys(shelves).map((s) => {
               return (
-                <option key={s} value={s}>
+                <Dropdown.Item
+                  eventKey={s}
+                  active={book.shelf === s}
+                  key={s}
+                  value={s}
+                >
                   {shelves[s]}
-                </option>
+                </Dropdown.Item>
               );
             })}
-          </select>
-        </div>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
-      <div className="book-title">{book.title}</div>
-      <div className="book-authors">
-        {book.authors && (
-          <ul>
-            {book.authors.map((author) => (
-              <li key={author}>{author}</li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+      <Card.Img variant="top" src={bookCover} />
+      <Card.Body>
+        <Card.Title>{book.title}</Card.Title>
+        <Card.Text>
+          Authors:{' '}
+          {book.authors &&
+            book.authors.map((author) => <span key={author}>{author}</span>)}
+          <p className="mt-3">
+            {book.ratingsCount ? 'Ratings: ' + book.ratingsCount : ''}
+          </p>
+        </Card.Text>
+      </Card.Body>
+      <Card.Footer>
+        <small>
+          Published {book.publisher ? 'by ' + book.publisher + ' | ' : ''}{' '}
+          {book.publishedDate}
+        </small>
+      </Card.Footer>
+    </Card>
   );
 }

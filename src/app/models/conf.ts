@@ -2,6 +2,7 @@ export const MAX_RESULTS = 50;
 
 export const PATHS = {
   list: '/',
+  bookDetails: '/book',
   search: '/search',
 };
 

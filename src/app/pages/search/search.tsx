@@ -10,6 +10,12 @@ import BookGrid from '../../components/book-grid/book-grid';
 import * as BooksAPI from '../../api/BooksAPI';
 import { useBooksContext } from 'src/app/context/booksContext';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { Button, Container, Form, Navbar } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleChevronLeft,
+  faCoffee,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Search() {
   const booksContext = useBooksContext();
@@ -56,28 +62,35 @@ export default function Search() {
     <DndProvider backend={HTML5Backend}>
       <div className="search-books">
         {/* ! Search Bar */}
-        <div className="search-books-bar">
-          <Link className="close-search" to={PATHS.list}>
-            Close
-          </Link>
 
-          <div className="search-books-input-wrapper">
-            <input
-              id={SEARCH_INPUT}
-              autoFocus={true}
-              type="text"
-              placeholder="Search by title, author, or ISBN"
-              value={search}
-              onChange={handleOnChange}
-            />
-          </div>
-        </div>
+        <Navbar bg="dark">
+          <Container>
+            <Link title="Back" to={PATHS.list}>
+              <Button className="text-nowrap me-4" variant="dark">
+                <FontAwesomeIcon className="me-1" icon={faCircleChevronLeft} />
+                Back
+              </Button>
+            </Link>
+            <Form className="d-flex flex w-100">
+              <Form.Control
+                type="search"
+                className="me-2"
+                aria-label="Search"
+                id={SEARCH_INPUT}
+                autoFocus={true}
+                placeholder="Search by title, author, or ISBN"
+                value={search}
+                onChange={handleOnChange}
+              />
+            </Form>
+          </Container>
+        </Navbar>
 
-        {/* Search results */}
         {isLoading ? (
           <Player
             src="https://assets7.lottiefiles.com/private_files/lf30_x8aowqs9.json"
             className="player"
+            style={{ height: '500px', width: '500px' }}
             loop
             autoplay
           />
