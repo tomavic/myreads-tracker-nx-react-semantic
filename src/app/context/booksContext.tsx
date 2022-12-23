@@ -1,11 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { BookData, BookDraggedItem } from '../models/book';
 import * as BooksAPI from '../../app/api/BooksAPI';
+import { MAX_RESULTS } from '../models/conf';
 
 export type AppState = {
   books: BookData[];
   loading: boolean;
+  search: string;
+  results: BookData[];
   updateBook: (book: BookData | BookDraggedItem) => void;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const BooksContext = createContext<AppState>({} as AppState);
@@ -13,6 +17,8 @@ const BooksContext = createContext<AppState>({} as AppState);
 function BooksProvider(props: any) {
   const [books, setBooks] = useState<Array<BookData>>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>('');
+  const [results, setResults] = useState<BookData[]>([]);
 
   const updateBook = async (
     book: BookData | BookDraggedItem
@@ -44,6 +50,20 @@ function BooksProvider(props: any) {
     }
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const term = e.target.value.trim();
+    setSearch(e.target.value);
+    if (term.length > 0) {
+      setLoading(true);
+      BooksAPI.search(term, MAX_RESULTS)
+        .then((res) => (res.length > 1 ? setResults(res) : setResults([])))
+        .catch(() => setResults([]))
+        .finally(() => setLoading(false));
+    } else {
+      setResults([]);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     BooksAPI.getAll()
@@ -52,7 +72,14 @@ function BooksProvider(props: any) {
       .finally(() => setLoading(false));
   }, []);
 
-  const booksData = { books, updateBook, loading };
+  const booksData = {
+    books,
+    updateBook,
+    loading,
+    handleSearch,
+    search,
+    results,
+  };
 
   return <BooksContext.Provider value={booksData} {...props} />;
 }

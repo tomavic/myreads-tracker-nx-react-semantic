@@ -86,10 +86,10 @@ export default function Book({ book }: BookProps) {
           Authors:{' '}
           {book.authors &&
             book.authors.map((author) => <span key={author}>{author}</span>)}
-          <p className="mt-3">
-            {book.ratingsCount ? 'Ratings: ' + book.ratingsCount : ''}
-          </p>
         </Card.Text>
+        <p className="mt-3">
+          {book.ratingsCount ? 'Ratings: ' + book.ratingsCount : ''}
+        </p>
       </Card.Body>
       <Card.Footer>
         <small>
