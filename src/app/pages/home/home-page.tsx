@@ -7,20 +7,40 @@ import Shelf from '../../components/shelf/shelf';
 import { shelves } from 'src/app/models/book';
 import { useBooksContext } from 'src/app/context/booksContext';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { Container, Navbar } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomePage() {
   const { loading } = useBooksContext();
   return (
     <div className="list-books">
-      <div className="list-books-title">
-        <h1>MyReads</h1>
-      </div>
-      <div className="list-books-content">
+      <Navbar bg="dark">
+        <Container>
+          <Navbar.Brand>
+            <img
+              src="/public/favicon.ico"
+              width="30"
+              height="30"
+              className="d-inline-block align-top rounded"
+              alt="MyBooks Tracker"
+            />{' '}
+            <span className="text-light text-center"> MyBooks Tracker</span>
+          </Navbar.Brand>
+
+          <Link to={PATHS.search}>
+            <FontAwesomeIcon className="text-light" icon={faSearch} />
+          </Link>
+        </Container>
+      </Navbar>
+
+      <div className="list-books-content mt-5">
         <DndProvider backend={HTML5Backend}>
           {loading ? (
             <Player
               src="https://assets4.lottiefiles.com/packages/lf20_4XmSkB.json"
               className="player"
+              style={{ height: '300px', width: '300px' }}
               loop
               autoplay
             />
@@ -33,9 +53,7 @@ export default function HomePage() {
           )}
         </DndProvider>
       </div>
-      <div className="open-search">
-        <Link to={PATHS.search}>Add a book</Link>
-      </div>
+      <div className="open-search"></div>
     </div>
   );
 }

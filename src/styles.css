@@ -56,16 +56,26 @@ body,
   border-bottom: 1px solid #dedede;
 }
 
-.bookshelf .active {
+.shelf-active {
   border: 5px solid grey;
 }
 
-.bookshelf .inactive {
+.shelf-inactive {
   padding: 5px;
 }
 
+.card .card-more {
+  position: absolute;
+  font-size: 32px;
+  right: 15px;
+}
+
+.card .card-more .dropdown-toggle::after {
+  display: none;
+}
 .bookshelf-books {
   text-align: center;
+  min-height: 20vh;
 }
 
 .open-search {
@@ -135,7 +145,6 @@ body,
   list-style-type: none;
   padding: 0;
   margin: 0;
-
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -145,8 +154,11 @@ body,
   text-align: left;
 }
 
+.selected-shelf {
+  background-color: grey;
+}
 .book {
-  width: 140px;
+  max-width: 320px;
 }
 .book-title,
 .book-authors {
