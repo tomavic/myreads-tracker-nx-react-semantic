@@ -40,8 +40,13 @@ export type BookDropResult = {
 
 export type BookDraggedItem = { title: string; id: string; shelf: string };
 
-export type BookRef = {
-  id: string;
-  title: string;
-  shelf: string;
+export type Shelves = {
+  [key: string]: string;
+};
+
+export const shelves: Shelves = {
+  currentlyReading: 'Currently reading',
+  wantToRead: 'Want to Read',
+  read: 'Read',
+  none: 'None',
 };

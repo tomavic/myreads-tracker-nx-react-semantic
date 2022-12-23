@@ -1,23 +1,30 @@
 import { useState } from 'react';
-import { BookData, BookDropResult, BookRef } from 'src/app/models/book';
-import { DEFAULT_BOOK_COVER, DND, shelves } from 'src/app/models/conf';
+import {
+  BookData,
+  BookDropResult,
+  BookDraggedItem,
+  shelves,
+} from 'src/app/models/book';
+import { DEFAULT_BOOK_COVER, DND } from 'src/app/models/conf';
 import { useDrag } from 'react-dnd';
+import { useBooksContext } from 'src/app/context/booksContext';
 
 type BookProps = {
   book: BookData;
-  onUpdateBook: (book: BookData | BookRef) => void;
 };
 
-export default function Book({ book, onUpdateBook }: BookProps) {
+export default function Book({ book }: BookProps) {
+  const booksContext = useBooksContext();
+
   const bookCover: string =
     book.imageLinks && book.imageLinks.thumbnail
       ? book.imageLinks.thumbnail
       : DEFAULT_BOOK_COVER;
   const [shelf, setShelf] = useState(book.shelf);
-  const handleChangeShelf = (b: BookData | BookRef, shelf: string) => {
-    const updatedBook: BookData | BookRef = { ...b, shelf };
+  const handleChangeShelf = (b: BookData | BookDraggedItem, shelf: string) => {
+    const updatedBook: BookData | BookDraggedItem = { ...b, shelf };
     setShelf(shelf);
-    onUpdateBook(updatedBook);
+    booksContext.updateBook(updatedBook);
   };
 
   const [{ isDragging }, drag] = useDrag(() => ({

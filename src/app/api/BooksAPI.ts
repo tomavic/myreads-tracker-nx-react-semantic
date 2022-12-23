@@ -1,4 +1,4 @@
-import { BookData, BookRef } from '../models/book';
+import { BookData, BookDraggedItem } from '../models/book';
 
 const api = 'https://reactnd-books-api.udacity.com';
 
@@ -8,6 +8,7 @@ if (!token) token = localStorage.token = Math.random().toString(36).slice(-8);
 
 const headers = {
   Accept: 'application/json',
+  // TODO: use user id as a token to get list of books
   Authorization: token as string,
 };
 
@@ -24,7 +25,7 @@ export const getAll = async (): Promise<BookData[]> => {
 };
 
 export const update = async (
-  book: BookData | BookRef,
+  book: BookData | BookDraggedItem,
   shelf: string
 ): Promise<BookData> => {
   const res = await fetch(`${api}/books/${book.id}`, {

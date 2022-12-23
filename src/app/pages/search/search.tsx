@@ -4,24 +4,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import React from 'react';
-import { BookData, BookRef } from 'src/app/models/book';
+import { BookData } from 'src/app/models/book';
 import { MAX_RESULTS, PATHS } from 'src/app/models/conf';
-import BookGrid from '../book-grid/bookgrid';
+import BookGrid from '../../components/book-grid/bookgrid';
 import * as BooksAPI from '../../api/BooksAPI';
+import { useBooksContext } from 'src/app/context/booksContext';
 
-type SearchProps = {
-  books: BookData[];
-  onUpdateBook: (book: BookData | BookRef) => void;
-};
+export default function Search() {
+  const booksContext = useBooksContext();
 
-export default function Search({ onUpdateBook, books }: SearchProps) {
   const SEARCH_INPUT = 'search-input';
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([] as BookData[]);
 
   const updateBookshelf = (book: BookData) => {
-    const existingBook = books.find((b) => b.id === book.id);
+    const existingBook = booksContext.books.find((b) => b.id === book.id);
     return {
       ...book,
       shelf: existingBook ? existingBook.shelf : 'none',
@@ -51,31 +49,32 @@ export default function Search({ onUpdateBook, books }: SearchProps) {
   }, [navigate]);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link className="close-search" to={PATHS.list}>
-            Close
-          </Link>
+    // <DndProvider backend={HTML5Backend}>
+    <div className="search-books">
+      {/* ! Search Bar */}
+      <div className="search-books-bar">
+        <Link className="close-search" to={PATHS.list}>
+          Close
+        </Link>
 
-          <div className="search-books-input-wrapper">
-            <input
-              id={SEARCH_INPUT}
-              autoFocus={true}
-              type="text"
-              placeholder="Search by title, author, or ISBN"
-              value={search}
-              onChange={handleOnChange}
-            />
-          </div>
+        <div className="search-books-input-wrapper">
+          <input
+            id={SEARCH_INPUT}
+            autoFocus={true}
+            type="text"
+            placeholder="Search by title, author, or ISBN"
+            value={search}
+            onChange={handleOnChange}
+          />
         </div>
-
-        <BookGrid
-          className="search-books-results"
-          books={results.map(updateBookshelf)}
-          onUpdateBook={onUpdateBook}
-        />
       </div>
-    </DndProvider>
+
+      {/* Search results */}
+      <BookGrid
+        className="search-books-results"
+        books={results.map(updateBookshelf)}
+      />
+    </div>
+    // </DndProvider>
   );
 }
