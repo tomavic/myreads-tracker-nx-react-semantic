@@ -4,6 +4,7 @@ import * as BooksAPI from '../../app/api/BooksAPI';
 
 export type AppState = {
   books: BookData[];
+  loading: boolean;
   updateBook: (book: BookData | BookDraggedItem) => void;
 };
 
@@ -11,6 +12,7 @@ const BooksContext = createContext<AppState>({} as AppState);
 
 function BooksProvider(props: any) {
   const [books, setBooks] = useState<Array<BookData>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const updateBook = async (
     book: BookData | BookDraggedItem
@@ -43,12 +45,14 @@ function BooksProvider(props: any) {
   };
 
   useEffect(() => {
+    setLoading(true);
     BooksAPI.getAll()
       .then((res) => (res.length > 1 ? setBooks(res) : setBooks([])))
-      .catch(() => setBooks([]));
+      .catch(() => setBooks([]))
+      .finally(() => setLoading(false));
   }, []);
 
-  const booksData = { books, updateBook };
+  const booksData = { books, updateBook, loading };
 
   return <BooksContext.Provider value={booksData} {...props} />;
 }
