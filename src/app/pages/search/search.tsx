@@ -9,6 +9,7 @@ import { MAX_RESULTS, PATHS } from 'src/app/models/conf';
 import BookGrid from '../../components/book-grid/bookgrid';
 import * as BooksAPI from '../../api/BooksAPI';
 import { useBooksContext } from 'src/app/context/booksContext';
+import Loader from 'src/app/components/loader/loader';
 
 export default function Search() {
   const booksContext = useBooksContext();
@@ -16,6 +17,7 @@ export default function Search() {
   const SEARCH_INPUT = 'search-input';
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [results, setResults] = useState([] as BookData[]);
 
   const updateBookshelf = (book: BookData) => {
@@ -30,9 +32,11 @@ export default function Search() {
     const term = e.target.value.trim();
     setSearch(e.target.value);
     if (term.length > 0) {
+      setIsLoading(true);
       BooksAPI.search(term, MAX_RESULTS)
         .then((res) => (res.length > 1 ? setResults(res) : setResults([])))
-        .catch(() => setResults([]));
+        .catch(() => setResults([]))
+        .finally(() => setIsLoading(false));
     } else {
       setResults([]);
     }
@@ -49,32 +53,36 @@ export default function Search() {
   }, [navigate]);
 
   return (
-    // <DndProvider backend={HTML5Backend}>
-    <div className="search-books">
-      {/* ! Search Bar */}
-      <div className="search-books-bar">
-        <Link className="close-search" to={PATHS.list}>
-          Close
-        </Link>
+    <DndProvider backend={HTML5Backend}>
+      <div className="search-books">
+        {/* ! Search Bar */}
+        <div className="search-books-bar">
+          <Link className="close-search" to={PATHS.list}>
+            Close
+          </Link>
 
-        <div className="search-books-input-wrapper">
-          <input
-            id={SEARCH_INPUT}
-            autoFocus={true}
-            type="text"
-            placeholder="Search by title, author, or ISBN"
-            value={search}
-            onChange={handleOnChange}
-          />
+          <div className="search-books-input-wrapper">
+            <input
+              id={SEARCH_INPUT}
+              autoFocus={true}
+              type="text"
+              placeholder="Search by title, author, or ISBN"
+              value={search}
+              onChange={handleOnChange}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Search results */}
-      <BookGrid
-        className="search-books-results"
-        books={results.map(updateBookshelf)}
-      />
-    </div>
-    // </DndProvider>
+        {/* Search results */}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <BookGrid
+            className="search-books-results"
+            books={results.map(updateBookshelf)}
+          />
+        )}
+      </div>
+    </DndProvider>
   );
 }
