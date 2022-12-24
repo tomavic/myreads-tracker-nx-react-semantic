@@ -12,7 +12,7 @@ const headers = {
   Authorization: token as string,
 };
 
-export const get = async (bookId: string): Promise<BookData> => {
+export const get = async (bookId: string | null): Promise<BookData> => {
   const res = await fetch(`${api}/books/${bookId}`, { headers });
   const data = await (res.json() as Promise<{ book: BookData }>);
   return data.book;
