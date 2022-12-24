@@ -5,14 +5,15 @@ import {
   BookDraggedItem,
   shelves,
 } from 'src/app/models/book';
-import { DEFAULT_BOOK_COVER, DND, PATHS } from 'src/app/models/conf';
+import { DEFAULT_BOOK_COVER, DND } from 'src/app/models/conf';
 import { useDrag } from 'react-dnd';
 import { useBooksContext } from 'src/app/context/booksContext';
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faEye } from '@fortawesome/free-solid-svg-icons';
+import { Button } from 'react-bootstrap';
 
 type BookProps = {
   book: BookData;
@@ -90,6 +91,12 @@ export default function Book({ book }: BookProps) {
         <p className="mt-3">
           {book.ratingsCount ? 'Ratings: ' + book.ratingsCount : ''}
         </p>
+        <Link to={'book/' + book.id}>
+          <Button className="w-100" variant="primary" size="lg">
+            <FontAwesomeIcon className="text-light me-1" icon={faEye} />
+            View Details
+          </Button>
+        </Link>
       </Card.Body>
       <Card.Footer>
         <small>
