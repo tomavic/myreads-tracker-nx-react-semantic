@@ -7,7 +7,7 @@ import {
 } from 'src/app/models/book';
 import { DEFAULT_BOOK_COVER, DND } from 'src/app/models/conf';
 import { useDrag } from 'react-dnd';
-import { useBooksContext } from 'src/app/context/booksContext';
+import { useBooksContext } from 'src/app/context/books-context';
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link } from 'react-router-dom';

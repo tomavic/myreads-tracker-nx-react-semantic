@@ -2,7 +2,7 @@ import { BookData, BookDraggedItem } from '../models/book';
 
 const api = 'https://reactnd-books-api.udacity.com';
 
-let token: unknown = localStorage.token;
+let token: unknown = window.localStorage.token;
 
 if (!token) token = localStorage.token = Math.random().toString(36).slice(-8);
 

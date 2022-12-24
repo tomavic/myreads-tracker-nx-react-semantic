@@ -7,7 +7,7 @@ import { BookData } from 'src/app/models/book';
 import { PATHS } from 'src/app/models/conf';
 import BookGrid from '../../components/book-grid/book-grid';
 
-import { useBooksContext } from 'src/app/context/booksContext';
+import { useBooksContext } from 'src/app/context/books-context';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { Button, Container, Form, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

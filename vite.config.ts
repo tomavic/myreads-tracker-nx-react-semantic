@@ -16,7 +16,11 @@ export default defineConfig({
   ],
 
   test: {
+    setupFiles: ['./vitest.setup.ts'],
     globals: true,
+    deps: {
+      inline: ['vitest-canvas-mock'],
+    },
     cache: {
       dir: './node_modules/.vitest',
     },

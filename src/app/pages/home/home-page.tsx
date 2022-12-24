@@ -5,14 +5,23 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { PATHS } from 'src/app/models/conf';
 import Shelf from '../../components/shelf/shelf';
 import { shelves } from 'src/app/models/book';
-import { useBooksContext } from 'src/app/context/booksContext';
+import { useBooksContext } from 'src/app/context/books-context';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { Container, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from 'react';
 
 export default function HomePage() {
-  const { loading } = useBooksContext();
+  const { loading, getMyBooks } = useBooksContext();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getMyBooks();
+    }, 300);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="list-books">
       <Navbar bg="dark">

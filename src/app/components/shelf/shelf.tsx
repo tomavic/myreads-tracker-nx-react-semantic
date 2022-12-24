@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import { useBooksContext } from 'src/app/context/booksContext';
+import { useBooksContext } from 'src/app/context/books-context';
 import { BookData } from 'src/app/models/book';
 import { DND } from 'src/app/models/conf';
 import BookGrid from '../book-grid/book-grid';
@@ -28,7 +28,9 @@ export default function Shelf({ id, title }: BookshelfProps) {
     <div id={id} ref={drop} className="bookshelf">
       <h2 className="bookshelf-title">{title}</h2>
       <div className={isActive ? 'shelf-active' : 'shelf-inactive'}>
-        <BookGrid books={books.filter((book: BookData) => book.shelf === id)} />
+        <BookGrid
+          books={books?.filter((book: BookData) => book.shelf === id)}
+        />
       </div>
     </div>
   );

@@ -1,19 +1,21 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { BookData, BookDraggedItem } from '../models/book';
-import * as BooksAPI from '../../app/api/BooksAPI';
+import * as BooksAPI from '../api/BooksAPI';
 import { MAX_RESULTS } from '../models/conf';
 
-export type AppState = {
+type AppState = {
   books: BookData[];
   loading: boolean;
   search: string;
   results: BookData[];
   updateBook: (book: BookData | BookDraggedItem) => void;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  getMyBooks: () => void;
 };
 
 const BooksContext = createContext<AppState>({} as AppState);
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function BooksProvider(props: any) {
   const [books, setBooks] = useState<Array<BookData>>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,16 +66,17 @@ function BooksProvider(props: any) {
     }
   };
 
-  useEffect(() => {
+  const getMyBooks = () => {
     setLoading(true);
     BooksAPI.getAll()
       .then((res) => (res.length > 1 ? setBooks(res) : setBooks([])))
       .catch(() => setBooks([]))
       .finally(() => setLoading(false));
-  }, []);
+  };
 
   const booksData = {
     books,
+    getMyBooks,
     updateBook,
     loading,
     handleSearch,
@@ -87,7 +90,12 @@ function BooksProvider(props: any) {
 // Here we create a custom hook that allows us to consume
 // the books context
 function useBooksContext() {
-  return useContext(BooksContext);
+  const context = useContext(BooksContext);
+
+  if (context === undefined) {
+    throw new Error('useBooksContext must be used within a BooksProvider');
+  }
+  return context;
 }
 
 export { BooksProvider, useBooksContext };
