@@ -12,16 +12,16 @@ const headers = {
   Authorization: token as string,
 };
 
-export const get = async (bookId: string): Promise<BookData> => {
-  const res = await fetch(`${api}/books/${bookId}`, { headers });
-  const data = await (res.json() as Promise<{ book: BookData }>);
-  return data.book;
-};
-
 export const getAll = async (): Promise<BookData[]> => {
   const res = await fetch(`${api}/books`, { headers });
   const data = await (res.json() as Promise<{ books: BookData[] }>);
   return data.books;
+};
+
+export const get = async (bookId: string): Promise<BookData> => {
+  const res = await fetch(`${api}/books/${bookId}`, { headers });
+  const data = await (res.json() as Promise<{ book: BookData }>);
+  return data.book;
 };
 
 export const update = async (

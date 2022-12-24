@@ -16,7 +16,7 @@ const BooksContext = createContext<AppState>({} as AppState);
 
 function BooksProvider(props: any) {
   const [books, setBooks] = useState<Array<BookData>>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState<string>('');
   const [results, setResults] = useState<BookData[]>([]);
 
@@ -65,6 +65,7 @@ function BooksProvider(props: any) {
   };
 
   useEffect(() => {
+    console.log('Effect ');
     setLoading(true);
     BooksAPI.getAll()
       .then((res) => (res.length > 1 ? setBooks(res) : setBooks([])))
