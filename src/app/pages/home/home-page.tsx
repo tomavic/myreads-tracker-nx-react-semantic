@@ -12,7 +12,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomePage() {
+  // TODO: Should use state & dispatch instead
   const { loading } = useBooksContext();
+
+  // TODO: useEffect to load initial data from API
+
   return (
     <div className="list-books">
       <Navbar bg="dark">
@@ -53,7 +57,6 @@ export default function HomePage() {
           )}
         </DndProvider>
       </div>
-      <div className="open-search"></div>
     </div>
   );
 }

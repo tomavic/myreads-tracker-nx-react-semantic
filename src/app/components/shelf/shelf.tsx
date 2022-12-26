@@ -28,7 +28,11 @@ export default function Shelf({ id, title }: BookshelfProps) {
     <div id={id} ref={drop} className="bookshelf">
       <h2 className="bookshelf-title">{title}</h2>
       <div className={isActive ? 'shelf-active' : 'shelf-inactive'}>
-        <BookGrid books={books.filter((book: BookData) => book.shelf === id)} />
+        <div className="bookshelf-books">
+          <BookGrid
+            books={books.filter((book: BookData) => book.shelf === id)}
+          />
+        </div>
       </div>
     </div>
   );

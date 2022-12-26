@@ -74,10 +74,9 @@ export default function Search() {
             autoplay
           />
         ) : (
-          <BookGrid
-            className="search-books-results"
-            books={results.map(updateBookshelf)}
-          />
+          <div className="search-books-results">
+            <BookGrid books={results.map(updateBookshelf)} />
+          </div>
         )}
       </div>
     </DndProvider>

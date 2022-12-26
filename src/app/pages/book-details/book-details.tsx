@@ -2,11 +2,11 @@ import { faCircleChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useEffect, useState } from 'react';
-import { Button, Container, Form, Navbar } from 'react-bootstrap';
+import { Button, Container, Navbar } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { BookData } from 'src/app/models/book';
 import { PATHS } from 'src/app/models/conf';
-import * as BooksAPI from '../../../app/api/BooksAPI';
+import * as BooksAPI from '../../api/BooksAPI';
 
 function BookDetails() {
   const { id } = useParams<{ id: string }>();

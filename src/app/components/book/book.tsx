@@ -20,6 +20,7 @@ type BookProps = {
 };
 
 export default function Book({ book }: BookProps) {
+  // TODO: use dispatch instead to update book shelf
   const booksContext = useBooksContext();
 
   const bookCover: string =
@@ -55,7 +56,9 @@ export default function Book({ book }: BookProps) {
       handlerId: monitor.getHandlerId(),
     }),
   }));
+
   const opacity = isDragging ? 0.4 : 1;
+
   return (
     <Card ref={drag} className="book" style={{ opacity }}>
       <div className="card-more">
