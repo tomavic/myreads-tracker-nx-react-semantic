@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   BookData,
   BookDropResult,
@@ -7,13 +6,14 @@ import {
 } from 'src/app/models/book';
 import { DEFAULT_BOOK_COVER, DND } from 'src/app/models/conf';
 import { useDrag } from 'react-dnd';
-import { useBooksContext } from 'src/app/context/booksContext';
+import { useBooksContext } from 'src/app/context/books-context';
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'react-bootstrap';
+import * as BooksAPI from '../../api/BooksAPI';
 
 type BookProps = {
   book: BookData;
@@ -21,23 +21,21 @@ type BookProps = {
 
 export default function Book({ book }: BookProps) {
   // TODO: use dispatch instead to update book shelf
-  const booksContext = useBooksContext();
+  const { state, dispatch } = useBooksContext();
 
   const bookCover: string =
     book.imageLinks && book.imageLinks.thumbnail
       ? book.imageLinks.thumbnail
       : DEFAULT_BOOK_COVER;
-  const [shelf, setShelf] = useState(book.shelf);
-  const handleChangeShelf = (b: BookData | BookDraggedItem, shelf: string) => {
+
+  const handleBookDrag = (b: BookData | BookDraggedItem, shelf: string) => {
     const updatedBook: BookData | BookDraggedItem = { ...b, shelf };
-    setShelf(shelf);
-    booksContext.updateBook(updatedBook);
+    updateBook(updatedBook);
   };
 
   const updateOnSelect = (shelf: any) => {
     const updatedBook: BookData | BookDraggedItem = { ...book, shelf };
-    setShelf(shelf);
-    booksContext.updateBook(updatedBook);
+    updateBook(updatedBook);
   };
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -47,7 +45,7 @@ export default function Book({ book }: BookProps) {
       const dropResult: BookDropResult = monitor.getDropResult();
       if (item && dropResult) {
         if (item.shelf !== dropResult.id) {
-          handleChangeShelf(item, dropResult.id);
+          handleBookDrag(item, dropResult.id);
         }
       }
     },
@@ -58,6 +56,42 @@ export default function Book({ book }: BookProps) {
   }));
 
   const opacity = isDragging ? 0.4 : 1;
+
+  const updateBook = async (
+    book: BookData | BookDraggedItem
+  ): Promise<void> => {
+    const existingBook = state.books.find((b) => b.id === book.id);
+    try {
+      if (existingBook) {
+        const shelf = existingBook.shelf;
+        if (shelf === book.shelf) {
+          //No change
+          console.log('Target and origin are the same', book);
+          return;
+        } else if (shelf === 'none') {
+          //Remove
+          await BooksAPI.update(book, book.shelf);
+          dispatch({
+            type: 'SET_BOOKS',
+            payload: state.books.filter((b) => b.id !== existingBook.id),
+          });
+        } else {
+          //Change
+          await BooksAPI.update(book, book.shelf);
+          Object.assign(existingBook, book);
+          dispatch({ type: 'SET_BOOKS', payload: [...state.books] });
+        }
+      } else {
+        await BooksAPI.update(book, book.shelf);
+        dispatch({
+          type: 'SET_BOOKS',
+          payload: [...state.books, book] as BookData[],
+        });
+      }
+    } catch (e) {
+      console.log('Error updating book:', e);
+    }
+  };
 
   return (
     <Card ref={drag} className="book" style={{ opacity }}>
