@@ -89,7 +89,7 @@ export default function Search() {
           <Player
             src="https://assets7.lottiefiles.com/private_files/lf30_x8aowqs9.json"
             className="player"
-            style={{ height: '500px', width: '500px' }}
+            style={{ height: '60vh', width: '100%' }}
             loop
             autoplay
           />

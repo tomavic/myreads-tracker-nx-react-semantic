@@ -128,7 +128,7 @@ export default function Book({ book }: BookProps) {
         <p className="mt-3">
           {book.ratingsCount ? 'Ratings: ' + book.ratingsCount : ''}
         </p>
-        <Link to={'book/' + book.id}>
+        <Link to={'/book/' + book.id}>
           <Button className="w-100" variant="primary" size="lg">
             <FontAwesomeIcon className="text-light me-1" icon={faEye} />
             View Details
