@@ -5,17 +5,28 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { PATHS } from 'src/app/models/conf';
 import Shelf from '../../components/shelf/shelf';
 import { shelves } from 'src/app/models/book';
-import { useBooksContext } from 'src/app/context/booksContext';
+import { useBooksContext } from 'src/app/context/books-context';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { Container, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from 'react';
+import * as BooksAPI from '../../../app/api/BooksAPI';
 
 export default function HomePage() {
-  // TODO: Should use state & dispatch instead
-  const { loading } = useBooksContext();
+  const { state, dispatch } = useBooksContext();
 
-  // TODO: useEffect to load initial data from API
+  useEffect(() => {
+    dispatch({ type: 'SET_LOADER', payload: true });
+    BooksAPI.getAll()
+      .then((res) =>
+        res.length > 1
+          ? dispatch({ type: 'SET_BOOKS', payload: res })
+          : dispatch({ type: 'SET_BOOKS', payload: [] })
+      )
+      .catch(() => dispatch({ type: 'SET_BOOKS', payload: [] }))
+      .finally(() => dispatch({ type: 'SET_LOADER', payload: false }));
+  }, [dispatch]);
 
   return (
     <div className="list-books">
@@ -23,7 +34,7 @@ export default function HomePage() {
         <Container>
           <Navbar.Brand>
             <img
-              src="/public/favicon.ico"
+              src="/favicon.ico"
               width="30"
               height="30"
               className="d-inline-block align-top rounded"
@@ -40,7 +51,7 @@ export default function HomePage() {
 
       <div className="list-books-content mt-5">
         <DndProvider backend={HTML5Backend}>
-          {loading ? (
+          {state.loading ? (
             <Player
               src="https://assets4.lottiefiles.com/packages/lf20_4XmSkB.json"
               className="player"

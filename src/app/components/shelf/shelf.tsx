@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import { useBooksContext } from 'src/app/context/booksContext';
+import { useBooksContext } from 'src/app/context/books-context';
 import { BookData } from 'src/app/models/book';
 import { DND } from 'src/app/models/conf';
 import BookGrid from '../book-grid/book-grid';
@@ -10,7 +10,7 @@ type BookshelfProps = {
 };
 
 export default function Shelf({ id, title }: BookshelfProps) {
-  const { books } = useBooksContext();
+  const { state } = useBooksContext();
 
   // use Drag & Drop
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -30,7 +30,7 @@ export default function Shelf({ id, title }: BookshelfProps) {
       <div className={isActive ? 'shelf-active' : 'shelf-inactive'}>
         <div className="bookshelf-books">
           <BookGrid
-            books={books.filter((book: BookData) => book.shelf === id)}
+            books={state.books.filter((book: BookData) => book.shelf === id)}
           />
         </div>
       </div>
