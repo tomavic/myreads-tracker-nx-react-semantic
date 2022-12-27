@@ -61,7 +61,6 @@ export default function Search() {
     <DndProvider backend={HTML5Backend}>
       <div className="search-books">
         {/* ! Search Bar */}
-
         <Navbar bg="dark">
           <Container>
             <Link title="Back" to={PATHS.list}>
@@ -87,12 +86,25 @@ export default function Search() {
 
         {state.loading ? (
           <Player
-            src="https://assets7.lottiefiles.com/private_files/lf30_x8aowqs9.json"
+            src="https://assets7.lottiefiles.com/packages/lf20_mgqdbqbs.json"
             className="player"
-            style={{ height: '60vh', width: '100%' }}
+            style={{ height: '100vh', width: '100%' }}
             loop
             autoplay
           />
+        ) : state.searchResults.length === 0 && state.searchKeyTerm !== '' ? (
+          <>
+            <Player
+              src="https://assets9.lottiefiles.com/packages/lf20_uqfbsoei.json"
+              className="player"
+              style={{ height: '50vh', width: '100%' }}
+              loop
+              autoplay
+            />
+            <p className="lead text-center mt-4">
+              No search results found. Try different keyword
+            </p>
+          </>
         ) : (
           <div className="search-books-results">
             <BookGrid books={state.searchResults.map(updateBookshelf)} />

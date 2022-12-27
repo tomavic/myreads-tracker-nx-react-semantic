@@ -40,7 +40,7 @@ export default function HomePage() {
               className="d-inline-block align-top rounded"
               alt="MyBooks Tracker"
             />{' '}
-            <span className="text-light text-center"> MyBooks Tracker</span>
+            <span className="text-light text-center">MyBooks Tracker</span>
           </Navbar.Brand>
 
           <Link to={PATHS.search}>
@@ -55,7 +55,7 @@ export default function HomePage() {
             <Player
               src="https://assets4.lottiefiles.com/packages/lf20_4XmSkB.json"
               className="player"
-              style={{ height: '300px', width: '300px' }}
+              style={{ height: '60vh', width: '50vw' }}
               loop
               autoplay
             />
