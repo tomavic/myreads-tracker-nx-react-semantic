@@ -1,13 +1,14 @@
 {
   "name": "myreads-tracker",
   "version": "0.0.0",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "prepare": "husky install"
   },
-  "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
@@ -43,6 +44,7 @@
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.31.11",
     "eslint-plugin-react-hooks": "4.6.0",
+    "husky": "^8.0.0",
     "jsdom": "~20.0.3",
     "nx": "15.3.3",
     "prettier": "^2.6.2",
