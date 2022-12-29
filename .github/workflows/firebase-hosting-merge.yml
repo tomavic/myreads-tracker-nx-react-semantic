@@ -18,6 +18,10 @@ jobs:
         run: npm run build
       - name: Test 🧪
         run: npm test
+      - name: Release 🚀
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
       - name: Deploy to Firebase 🔥
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
