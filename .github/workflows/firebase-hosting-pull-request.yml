@@ -11,11 +11,26 @@ jobs:
       - name: Checkout repo ✅
         uses: actions/checkout@v2
       - name: Install Dependencies 🔧
-        run: npm ci
+        run: |
+          if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+          elif [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
+
       - name: Build 📦
         run: npm run build
+
       - name: Test 🧪
         run: npm test
+
+      - name: Release 🚀
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release --dry-run
+
       - name: Deploy to Firebase 🔥
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:

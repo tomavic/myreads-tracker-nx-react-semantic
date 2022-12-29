@@ -66,7 +66,6 @@ export default function Book({ book }: BookProps) {
         const shelf = existingBook.shelf;
         if (shelf === book.shelf) {
           //No change
-          console.log('Target and origin are the same', book);
           return;
         } else if (shelf === 'none') {
           //Remove
