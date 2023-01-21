@@ -24,6 +24,7 @@
         "parserOpts": {
           "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
         },
+        "preset": "angular",
         "presetConfig": {
           "types": [
             {
