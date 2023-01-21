@@ -24,32 +24,43 @@
         "parserOpts": {
           "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
         },
+        "preset": "conventionalcommits",
         "presetConfig": {
           "types": [
-            { "type": "feat", "section": "Features" },
-            { "type": "fix", "section": "Bug Fixes" },
-            { "type": "perf", "section": "Performance Improvements" },
-            { "type": "revert", "section": "Reverts" },
-            { "type": "docs", "section": "Documentation", "hidden": false },
-            { "type": "style", "section": "Styles", "hidden": false },
+            {
+              "type": "breaking",
+              "section": "❗ Breaking ❗",
+              "hidden": false
+            },
+            { "type": "feat", "section": "✨ Feature", "hidden": false },
+            { "type": "fix", "section": "🐛 Bugfix", "hidden": false },
+            { "type": "docs", "section": "📝  Documentation", "hidden": false },
             {
               "type": "chore",
-              "section": "Miscellaneous Chores",
+              "section": "🔨  Misc.",
+              "hidden": false
+            },
+            {
+              "type": "ci",
+              "section": "📦️ Build and CI",
               "hidden": false
             },
             {
               "type": "refactor",
-              "section": "Code Refactors",
+              "section": "⚡️ Code Performance",
               "hidden": false
             },
-            { "type": "test", "section": "Tests", "hidden": false },
-            { "type": "build", "section": "Build System", "hidden": false },
-            { "type": "ci", "section": "CI/CD", "hidden": false },
             {
-              "type": "improvement",
-              "section": "Improvements",
+              "type": "test",
+              "section": "🧪 Code Test",
               "hidden": false
-            }
+            },
+            {
+              "type": "style",
+              "section": "💄 Design",
+              "hidden": false
+            },
+            { "type": "hotfix", "section": "🔥 Hotfix 🔥", "hidden": false }
           ]
         }
       }
@@ -57,15 +68,14 @@
     [
       "@semantic-release/changelog",
       {
-        "changelogFile": "CHANGELOG.md",
-        "changelogTitle": "MyReads Tracker Semantic Versioning Changelog"
+        "changelogFile": "CHANGELOG.md"
       }
     ],
     [
       "@semantic-release/git",
       {
         "assets": ["CHANGELOG.md"],
-        "message": "chore(release): 🚀 ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        "message": "build: 🚀 ${nextRelease.gitTag} has been released \n\n${nextRelease.notes}"
       }
     ],
     [
