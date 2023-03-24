@@ -1,3 +1,10 @@
+### [1.0.1](https://github.com/tomavic/myreads-tracker/compare/v1.0.0...v1.0.1) (2023-03-24)
+
+
+### 🔨  Misc.
+
+* :hammer: update ([69ddec2](https://github.com/tomavic/myreads-tracker/commit/69ddec23b8c8cd1967618fb5e1555e80be37c390))
+
 ## 1.0.0 (2023-02-05)
 
 
