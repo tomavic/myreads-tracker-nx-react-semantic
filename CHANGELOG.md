@@ -1,3 +1,16 @@
+### [1.0.2](https://github.com/tomavic/myreads-tracker-nx-react-semantic/compare/v1.0.1...v1.0.2) (2023-04-09)
+
+
+### 🔨  Misc.
+
+* update gitignore ([180834d](https://github.com/tomavic/myreads-tracker-nx-react-semantic/commit/180834d499303cbe528c279cbd2706de96939041))
+* update gitignore ([36858bb](https://github.com/tomavic/myreads-tracker-nx-react-semantic/commit/36858bb801314cf4aa19fd4ed78cbdddc61c11d1))
+
+
+### 📦️ Build and CI
+
+* use npm i check first ([bba9394](https://github.com/tomavic/myreads-tracker-nx-react-semantic/commit/bba939472eee3db2cac79abfc4d96ea8628c3a81))
+
 ### [1.0.1](https://github.com/tomavic/myreads-tracker/compare/v1.0.0...v1.0.1) (2023-03-24)
 
 
