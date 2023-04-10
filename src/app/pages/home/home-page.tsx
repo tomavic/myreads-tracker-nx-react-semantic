@@ -40,7 +40,7 @@ export default function HomePage() {
               className="d-inline-block align-top rounded"
               alt="MyBooks Tracker"
             />{' '}
-            <span className="text-light text-center">MyBooks Tracker</span>
+            <span className="text-light text-center">My Books</span>
           </Navbar.Brand>
 
           <Link to={PATHS.search}>
