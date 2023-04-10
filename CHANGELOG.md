@@ -1,3 +1,10 @@
+### [1.0.3](https://github.com/tomavic/myreads-tracker-nx-react-semantic/compare/v1.0.2...v1.0.3) (2023-04-10)
+
+
+### 📦️ Build and CI
+
+* add next channel in pipline ([52586a2](https://github.com/tomavic/myreads-tracker-nx-react-semantic/commit/52586a21d233c21781d6ffe321eee4a0aa983400))
+
 ### [1.0.2](https://github.com/tomavic/myreads-tracker-nx-react-semantic/compare/v1.0.1...v1.0.2) (2023-04-09)
 
 
