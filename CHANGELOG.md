@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/tomavic/myreads-tracker-nx-react-semantic/compare/v1.0.3...v2.0.0) (2023-04-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* add new title for my next major change
+
+### ✨ Feature
+
+* add new title ([91ad056](https://github.com/tomavic/myreads-tracker-nx-react-semantic/commit/91ad056350dedd9c5e8d68614cdf209b072f7049))
+
 ### [1.0.3](https://github.com/tomavic/myreads-tracker-nx-react-semantic/compare/v1.0.2...v1.0.3) (2023-04-10)
 
 ### 📦️ Build and CI
