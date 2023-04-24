@@ -86,14 +86,14 @@
     [
       "@semantic-release/git",
       {
-        "assets": ["dist/assets/**"],
+        "assets": "dist/*.tgz",
         "message": "build: 🚀 ${nextRelease.gitTag} has been released [skip ci] \n\n${nextRelease.notes}"
       }
     ],
     [
       "@semantic-release/github",
       {
-        "assets": ["dist/assets/**"]
+        "assets": "dist/*.tgz"
       }
     ]
   ]
